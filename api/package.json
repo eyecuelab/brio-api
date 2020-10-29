@@ -1,7 +1,7 @@
 {
-  "name": "shoe-api",
-  "version": "1.0.0",
-  "description": "shoe API",
+  "name": "brio-api",
+  "version": "0.1.0",
+  "description": "Brio API",
   "main": "server.js",
   "scripts": {
     "start": "./node_modules/.bin/nodemon server.js --exec babel-node",
@@ -17,7 +17,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eyecuelab/shoe.git"
+    "url": "https://github.com/eyecuelab/brio-api.git"
   },
   "engines": {
     "node": "12.13.x",

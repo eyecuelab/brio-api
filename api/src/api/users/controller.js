@@ -4,7 +4,6 @@ import Core from '../../../core';
 
 import BaseController from '../base';
 import { User } from '../../models/user';
-import { Cleaner } from '../../models/cleaner';
 import { UserSerializer } from '../../serializers/user';
 
 import { AccountEmailer } from '../../services/emailer';
@@ -22,24 +21,8 @@ class UsersController extends BaseController {
     this.bindAll(this);
   }
 
-  async getList(req) {
-    const scopes = [];
-    if (req.query.search) {
-      scopes.push(User.search(['first_name', 'last_name', 'email'], req.query.search));
-    }
-    const list = await this.paginate(req, User, scopes);
-
-    return UserSerializer.jsonAPI(list, req);
-  }
-
   async get(req) {
     const item = await this.fetch(req, true);
-
-    const cleaner = await Cleaner.findByUserID(item.id);
-
-    if (cleaner?.id) {
-      item.relations.cleaner = cleaner;
-    }
 
     return UserSerializer.jsonAPI(item, req);
   }
@@ -76,10 +59,7 @@ class UsersController extends BaseController {
 
   async del(req, h) {
     const item = await this.fetch(req);
-    await item.save(
-      { deleted_at: new Date() },
-      { patch: true },
-    );
+    await item.save({ deleted_at: new Date() }, { patch: true });
 
     return h.response().code(204);
   }
@@ -87,9 +67,7 @@ class UsersController extends BaseController {
   // Helpers
 
   input(req) {
-    const keys = [
-      'image_url', 'first_name', 'last_name', 'email', 'street_address', 'city', 'state', 'postal_code', 'phone',
-    ];
+    const keys = ['first_name', 'last_name', 'email'];
 
     const input = this.cleanInput(req, keys);
     if (input.email) {
@@ -103,21 +81,21 @@ class UsersController extends BaseController {
     return this.getByID(req.currentUser.id, User);
   }
 
-  async uploadFile(req, fileData, user) {
-    const { filename, headers } = fileData.hapi;
-    /* eslint-disable-next-line no-underscore-dangle */
-    const buffer = fileData._data;
-    const s3Integration = S3API.create();
-    const uploadResponse = await s3Integration.uploadStream(
-      buffer,
-      `users/${user.id}/${filename}`,
-      null,
-      // TODO: need to set private and presign on fetch
-      { isPublic: true, contentType: headers['content-type'] },
-    );
+  // async uploadFile(req, fileData, user) {
+  //   const { filename, headers } = fileData.hapi;
+  //   /* eslint-disable-next-line no-underscore-dangle */
+  //   const buffer = fileData._data;
+  //   const s3Integration = S3API.create();
+  //   const uploadResponse = await s3Integration.uploadStream(
+  //     buffer,
+  //     `users/${user.id}/${filename}`,
+  //     null,
+  //     // TODO: need to set private and presign on fetch
+  //     { isPublic: true, contentType: headers['content-type'] },
+  //   );
 
-    return uploadResponse.Location;
-  }
+  //   return uploadResponse.Location;
+  // }
 }
 
 module.exports = new UsersController();

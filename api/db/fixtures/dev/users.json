@@ -4,24 +4,23 @@
     "first_name": "Don",
     "last_name": "Pepito",
     "email": "example@example.com",
-    "password": "theshoe"
+    "password": "brio1234",
+    "uuid": "6bbeaa66-09f6-4871-af43-6b94843e618d"
   },
   {
     "id": 2,
     "first_name": "Casey",
     "last_name": "Macy",
     "email": "example2@example.com",
-    "password": "theshoe"
+    "password": "brio1234",
+    "uuid": "48893376-637f-430c-a66a-4771b6566cda"
   },
   {
     "id": 3,
     "first_name": "Chuck",
     "last_name": "Norris",
     "email": "example3@example.com",
-    "password": "theshoe",
-    "street_address": "532 NW 12th Ave",
-    "city": "Portland",
-    "state": "OR",
-    "postal_code": "97209"
+    "password": "brio1234",
+    "uuid": "63fc4b70-4fb3-4363-b3a3-3689bd1681b3"
   }
 ]

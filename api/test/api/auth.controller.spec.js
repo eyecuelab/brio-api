@@ -17,10 +17,8 @@ describe('Session API', () => {
   let users = [];
   let user;
   let s;
-  const signedInActions = ['logout', 'update', 'create_cleaner'];
-  const signedInLinks = [
-    'self', 'orders', 'cleaners', 'profile',
-  ];
+  const signedInActions = ['logout', 'update'];
+  const signedInLinks = ['self', 'profile'];
 
   before(async () => {
     await DBUtil.clean(DB.knex);
@@ -37,15 +35,23 @@ describe('Session API', () => {
     response = await api.postAnon(s, '/login', payload);
 
     expect(response.statusCode).to.equal(400);
-    expect(response.result.message).to.equal('child "password" fails because ["password" is required]');
+    expect(response.result.message).to.equal(
+      'child "password" fails because ["password" is required]',
+    );
 
     // case sensitive password
-    response = await api.postAnon(s, '/login', { ...payload, password: 'THESHOE' });
+    response = await api.postAnon(s, '/login', {
+      ...payload,
+      password: 'BRIO1234',
+    });
     expect(response.statusCode).to.equal(401);
     expect(response.result.message).to.equal('Wrong email/password');
 
     // successful login
-    response = await api.postAnon(s, '/login', { ...payload, password: 'theshoe' });
+    response = await api.postAnon(s, '/login', {
+      ...payload,
+      password: 'brio1234',
+    });
     await schema.validateOne(response.result);
     schema.mustHaveActions(response.result, signedInActions);
     schema.mustHaveLinks(response.result, signedInLinks);
@@ -65,8 +71,7 @@ describe('Session API', () => {
 
     expect(response.statusCode).to.equal(200);
     await schema.validateOne(response.result);
-    schema.mustHaveActions(response.result,
-      ['login', 'signup']);
+    schema.mustHaveActions(response.result, ['login', 'signup']);
   });
 
   it('signs up a user', async () => {
@@ -76,6 +81,7 @@ describe('Session API', () => {
       email: 'test@example.com',
       password: 'testPassword',
     };
+
     const response = await api.postAnon(s, '/signup', payload);
 
     expect(response.statusCode).to.equal(204);

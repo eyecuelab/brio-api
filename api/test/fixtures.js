@@ -15,9 +15,7 @@ async function seed(name, processor) {
     list = processor(list);
   }
 
-  await Promise.all([
-    DB.knex(name).insert(list),
-  ]);
+  await Promise.all([DB.knex(name).insert(list)]);
   await resetSeq(name);
 
   return list;
@@ -54,12 +52,4 @@ export async function seedUsers() {
 
 export async function seedData() {
   await seed('pages');
-}
-
-export async function seedOrders() {
-  await seed('orders');
-}
-
-export async function seedCleaners() {
-  await seed('cleaners');
 }

@@ -180,24 +180,25 @@ const configSchema = {
   logging: {
     doc: 'The logging configs for bunyan.',
     format: Array,
-    default: [{
-      level: 'error',
-      type: 'rotating-file',
-      period: '1d',
-      count: 3,
-      path: './logs/error.log',
-    },
-    {
-      level: 'debug',
-      type: 'rotating-file',
-      period: '1d',
-      count: 3,
-      path: './logs/debug.log',
-    },
-    {
-      level: 'error',
-      stream: process.stdout,
-    },
+    default: [
+      {
+        level: 'error',
+        type: 'rotating-file',
+        period: '1d',
+        count: 3,
+        path: './logs/error.log',
+      },
+      {
+        level: 'debug',
+        type: 'rotating-file',
+        period: '1d',
+        count: 3,
+        path: './logs/debug.log',
+      },
+      {
+        level: 'error',
+        stream: process.stdout,
+      },
     ],
     env: 'LOGGING_CONFIG',
   },

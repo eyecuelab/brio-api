@@ -2,15 +2,11 @@ import Joi from '@hapi/joi';
 
 import controller from './controller';
 
-// const multipartOpts = {
-//   maxBytes: 10000000,
-//   output: 'stream',
-//   parse: true,
-// };
-
 const Routes = [
   [
-    'GET', '/profile', controller.get,
+    'GET',
+    '/profile',
+    controller.get,
     {
       description: 'Get a user',
       validate: {
@@ -21,7 +17,9 @@ const Routes = [
     },
   ],
   [
-    'PATCH', '/profile', controller.update,
+    'PATCH',
+    '/profile',
+    controller.update,
     {
       description: 'Update a profile',
       validate: {
@@ -36,15 +34,8 @@ const Routes = [
             .lowercase()
             .error(new Error('Must be a valid email address')),
           password: Joi.string().min(6).allow(null).allow(''),
-          image_url: Joi.string().uri().allow(null).allow(''),
-          street_address: Joi.string().allow(null).allow(''),
-          city: Joi.string().allow(null).allow(''),
-          state: Joi.string().length(2).allow(null).allow(''),
-          postal_code: Joi.string().allow(null).allow(''),
-          phone: Joi.string().allow(null).allow(''),
         },
       },
-      // payload: multipartOpts,
     },
   ],
 ];

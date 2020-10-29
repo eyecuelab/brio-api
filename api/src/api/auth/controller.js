@@ -11,7 +11,6 @@ import { User } from '../../models/user';
 import { Session } from '../../models/session';
 import { SessionSerializer } from '../../serializers/session';
 import { SessionAnonSerializer } from '../../serializers/session_anon';
-import Cleaner from '../../models/cleaner';
 
 import { AccountEmailer } from '../../services/emailer';
 
@@ -37,7 +36,9 @@ class AuthController extends BaseController {
       return Boom.unauthorized('Wrong email/password');
     }
     if (user.attributes.confirmation_sent_at) {
-      return Boom.unauthorized('Unconfirmed user, please submit email verification code');
+      return Boom.unauthorized(
+        'Unconfirmed user, please submit email verification code',
+      );
     }
     const session = await Session.createOne(user.attributes.id);
 
@@ -54,16 +55,11 @@ class AuthController extends BaseController {
     session.attributes.token = SessionUtil.createSession(
       sess,
       scopes,
-      Constants.EXPIRATION_PERIOD.MEDIUM);
+      Constants.EXPIRATION_PERIOD.MEDIUM,
+    );
     session.attributes.scope = scopes;
 
     req.currentUser = user;
-
-    const cleaner = await Cleaner.findByUserID(req.currentUser.id);
-
-    if (cleaner?.id) {
-      session.relations.cleaner = cleaner;
-    }
 
     return SessionSerializer.jsonAPI(session, req);
   }
@@ -82,12 +78,6 @@ class AuthController extends BaseController {
     delete req.currentUser.attributes.scope;
 
     req.sess.relations.user = req.currentUser;
-
-    const cleaner = await Cleaner.findByUserID(req.currentUser.id);
-
-    if (cleaner?.id) {
-      req.sess.relations.cleaner = cleaner;
-    }
 
     return SessionSerializer.jsonAPI(req.sess, req);
   }
@@ -121,12 +111,7 @@ class AuthController extends BaseController {
   }
 
   input(req) {
-    const keys = [
-      'first_name',
-      'last_name',
-      'email',
-      'password',
-    ];
+    const keys = ['first_name', 'last_name', 'email', 'password'];
     return this.cleanInput(req, keys);
   }
 

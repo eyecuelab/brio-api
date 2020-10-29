@@ -1,7 +1,7 @@
 {
-  "name": "shoe",
+  "name": "brio-api",
   "version": "1.0.0",
-  "description": "Shoe Main Repo",
+  "description": "Brio Api Repository",
   "engines": {
     "node": "12.13.x",
     "npm": "6.13.x"

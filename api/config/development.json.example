@@ -1,6 +1,6 @@
 {
   "db": {
-    "name": "shoe_dev",
+    "name": "brio_dev",
     "user": "postgres",
     "password": "",
     "host": "localhost"
@@ -14,9 +14,9 @@
   "emails": {
     "defaults": "example@example.com",
     "system": {
-      "fromName": "shoe-dev-from",
+      "fromName": "brio-dev-from",
       "fromAddress": "example@example.com",
-      "toName": "shoe-dev-to",
+      "toName": "brio-dev-to",
       "toAddress": "example@example.com"
     }
   },

@@ -7,8 +7,6 @@ import uuidv4 from 'uuid/v4';
 import Core from '../../core';
 import { BaseModel } from './base';
 import { Session } from './session';
-import { Cleaner } from './cleaner';
-import { Order } from './order';
 // import JSONAPIUtil from '../utils/jsonapi';
 
 const { DBUtil } = Core.utils;
@@ -33,14 +31,6 @@ export class User extends BaseModel {
     return this.hasMany(Session);
   }
 
-  cleaner() {
-    return this.hasOne(Cleaner);
-  }
-
-  orders() {
-    return this.hasMany(Order);
-  }
-
   static withRolesScope(roles) {
     return (qb) => {
       qb.whereRaw('users.scope @> ?', [roles]);
@@ -61,11 +51,6 @@ export class User extends BaseModel {
       last_name: Joi.string(),
       uuid: Joi.string().min(36).max(36).required(),
       scope: Joi.array().items(Joi.string()),
-      street_address: Joi.string().allow(''),
-      city: Joi.string().allow(''),
-      state: Joi.string().length(2).allow(''),
-      postal_code: Joi.string().allow(''),
-      phone: Joi.string().allow(''),
       confirmation_sent_at: Joi.object().allow(null),
     });
     return Joi.validate(user, schema);
@@ -76,23 +61,22 @@ export class User extends BaseModel {
       uuid: uuidv4(),
       password: uuidv4(),
       scope: [],
-      street_address: '',
-      city: '',
-      state: '',
-      postal_code: '',
-      phone: '',
       confirmation_sent_at: new Date(),
     };
     const data = { ...defaults, ...props };
     const { error } = this.validate(data);
 
     if (error) {
-      return Promise.reject(Boom.badRequest('User validation failed', error.message, null));
+      return Promise.reject(
+        Boom.badRequest('User validation failed', error.message, null),
+      );
     }
 
     const user = await User.findByEmail(data.email);
     if (user != null) {
-      return Promise.reject(Boom.conflict(`User with email: ${data.email}, already exists`));
+      return Promise.reject(
+        Boom.conflict(`User with email: ${data.email}, already exists`),
+      );
     }
 
     data.email = data.email.toLowerCase();
@@ -102,9 +86,12 @@ export class User extends BaseModel {
   }
 
   static findByEmail(email) {
-    return this.findOne({}, {
-      email: email.toLowerCase(),
-    });
+    return this.findOne(
+      {},
+      {
+        email: email.toLowerCase(),
+      },
+    );
   }
 
   static activateByEmail(email) {
@@ -152,11 +139,12 @@ export class User extends BaseModel {
   static async signup(email, createdBy) {
     const user = await this.findByEmail(email);
     if (user) {
-      throw Boom.badRequest('Account with this email is already registered, please sign in or reset your password ');
+      throw Boom.badRequest(
+        'Account with this email is already registered, please sign in or reset your password ',
+      );
     }
 
     const attrs = this.inviteAttrs({ email, created_by: createdBy });
-
 
     return this.forge(attrs).save();
   }
