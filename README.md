@@ -11,6 +11,11 @@ npm start
 
 ## DevOps
 
+Push to Master on github should now trigger build cycle
+```
+git push origin master
+```
+
 Push to Heroku
 
 ```
