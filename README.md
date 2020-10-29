@@ -34,3 +34,5 @@ Seed DB
 ```
 heroku run "npm run db:seed --prefix api" -a brio-api
 ```
+
+.
