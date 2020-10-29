@@ -8,7 +8,7 @@ import { UserSerializer } from '../../serializers/user';
 
 import { AccountEmailer } from '../../services/emailer';
 
-const { S3API } = Core.integrations.S3API;
+// const { S3API } = Core.integrations.S3API;
 const { GeneralUtil } = Core.utils;
 const { To } = GeneralUtil;
 
