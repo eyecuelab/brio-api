@@ -21,10 +21,9 @@ export class UserSerializer extends BaseSerializer {
   }
 
   static itemMapper(req) {
-    const path = this.resourceRoot(req);
     return {
       topLevelLinks: {
-        self: (record) => this.url(`${path}/${record.id}`),
+        self: () => this.url('profile'),
       },
       dataLinks: null,
       attributes: this.attrs(),
@@ -35,11 +34,10 @@ export class UserSerializer extends BaseSerializer {
   }
 
   static userActions(req, record) {
-    const path = this.resourceRoot(req);
     const actions = [];
 
     actions.push(
-      this.action('PATCH', 'update', `${path}/${record.id}`, [
+      this.action('PATCH', 'update', 'profile', [
         ['first_name', 'text', record.first_name],
         ['last_name', 'text', record.last_name],
         ['email', 'text', record.email],
