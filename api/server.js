@@ -7,7 +7,7 @@ const { manifest } = Core;
 // Start server
 const serverPromise = Core.start(manifest);
 // serverPromise.then(() => {
-fs.openSync('/tmp/app-initialized', 'w');
+// fs.openSync('/tmp/app-initialized', 'w');
 // });
 
 module.exports = serverPromise;
