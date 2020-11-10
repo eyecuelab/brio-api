@@ -111,7 +111,7 @@ class AuthController extends BaseController {
   }
 
   input(req) {
-    const keys = ['first_name', 'last_name', 'email', 'password'];
+    const keys = ['username', 'email', 'password'];
     return this.cleanInput(req, keys);
   }
 
