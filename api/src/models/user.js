@@ -47,8 +47,7 @@ export class User extends BaseModel {
     const schema = Joi.object().keys({
       email: Joi.string().email().required(),
       password: Joi.string().min(6).required(),
-      first_name: Joi.string(),
-      last_name: Joi.string(),
+      username: Joi.string().max(12).required(),
       uuid: Joi.string().min(36).max(36).required(),
       scope: Joi.array().items(Joi.string()),
       confirmation_sent_at: Joi.object().allow(null),
@@ -127,8 +126,7 @@ export class User extends BaseModel {
   static inviteAttrs(data) {
     return {
       uuid: uuidv4(),
-      first_name: data.first_name,
-      last_name: data.last_name,
+      username: data.username,
       email: data.email.toLowerCase(),
       password: DBUtil.randomPassword(),
       confirmation_sent_at: new Date(),

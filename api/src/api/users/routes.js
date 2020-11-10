@@ -27,8 +27,7 @@ const Routes = [
           authorization: Joi.string().required(),
         }).unknown(),
         payload: {
-          first_name: Joi.string(),
-          last_name: Joi.string(),
+          username: Joi.string().max(12),
           email: Joi.string()
             .email({ minDomainSegments: 2 })
             .lowercase()

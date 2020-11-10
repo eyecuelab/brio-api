@@ -24,8 +24,7 @@ export class SessionSerializer extends BaseSerializer {
             this.action('POST', 'logout', 'logout'),
 
             this.action('PATCH', 'update', 'profile', [
-              ['first_name', 'text', req.currentUser.attributes.first_name],
-              ['last_name', 'text', req.currentUser.attributes.last_name],
+              ['username','text', req.currentUser.attributes.sername],
               ['email', 'text', req.currentUser.attributes.email],
               ['password', 'password'],
             ]),

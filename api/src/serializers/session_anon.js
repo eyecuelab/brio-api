@@ -18,8 +18,7 @@ export class SessionAnonSerializer extends BaseSerializer {
             ['password', 'password', null, { required: true }],
           ]),
           this.action('POST', 'signup', 'signup', [
-            ['first_name', 'text', null],
-            ['last_name', 'text', null],
+            ['username', 'text', null],
             ['email', 'text', null, { required: true }],
             ['password', 'password', null, { required: true }],
           ]),
