@@ -22,7 +22,7 @@ const Routes = [
             .required()
             .lowercase()
             .error(Error('Must be a valid email address')),
-          username: Joi.string().required(),
+          username: Joi.string().max(12).required(),
           password: Joi.string().min(6).required(),
         },
       },

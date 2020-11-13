@@ -76,8 +76,7 @@ describe('Session API', () => {
 
   it('signs up a user', async () => {
     const payload = {
-      first_name: 'Edward',
-      last_name: 'Scissor Hands',
+      username: 'eddieScissoors',
       email: 'test@example.com',
       password: 'testPassword',
     };

@@ -11,8 +11,7 @@ export class UserSerializer extends BaseSerializer {
 
   static attrs() {
     return [
-      'first_name',
-      'last_name',
+      'username',
       'email',
       'scope',
       'created_at',
@@ -38,8 +37,7 @@ export class UserSerializer extends BaseSerializer {
 
     actions.push(
       this.action('PATCH', 'update', 'profile', [
-        ['first_name', 'text', record.first_name],
-        ['last_name', 'text', record.last_name],
+        ['username', 'text', record.username],
         ['email', 'text', record.email],
       ]),
     );

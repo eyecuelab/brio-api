@@ -13,7 +13,7 @@ export class BaseSerializer extends Base {
   static userRel() {
     return {
       ref: 'id',
-      attributes: ['uuid', 'email', 'first_name', 'last_name'],
+      attributes: ['uuid', 'email', 'username'],
     };
   }
 }

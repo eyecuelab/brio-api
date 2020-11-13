@@ -67,7 +67,7 @@ class UsersController extends BaseController {
   // Helpers
 
   input(req) {
-    const keys = ['first_name', 'last_name', 'email'];
+    const keys = ['username', 'email'];
 
     const input = this.cleanInput(req, keys);
     if (input.email) {
